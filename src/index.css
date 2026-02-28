@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-fin-dark: #020205;
+  --color-fin-blue: #3b82f6;
+  --color-fin-indigo: #6366f1;
+  --color-fin-emerald: #10b981;
+  --color-fin-rose: #f43f5e;
+  --color-fin-amber: #f59e0b;
+}
+
+@layer base {
+  :root {
+    /* Fluid Typography */
+    --fs-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+    --fs-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+    --fs-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+    --fs-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+    --fs-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+    --fs-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+    --fs-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.5rem);
+    --fs-4xl: clamp(2.25rem, 2rem + 1.25vw, 3rem);
+
+    /* Spacing */
+    --spacing-container: clamp(1rem, 5vw, 2.5rem);
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-slate-200 bg-fin-dark antialiased selection:bg-fin-blue/30 selection:text-blue-200;
+    background-image: 
+      radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 45%),
+      radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, #050510 0%, #020205 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    /* Removed fixed zoom to ensure true responsiveness */
+  }
+
+  /* Improved Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 20px);
+  }
+  
+  .min-h-screen-safe {
+    min-height: 100vh; /* Fallback */
+    min-height: 100dvh;
+  }
+
+  /* Fluid Container */
+  .container-fluid {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--spacing-container);
+    padding-right: var(--spacing-container);
+    max-width: 1440px;
+  }
+  
+  /* Fintech Glassmorphism - More Material Feel */
+  .glass-panel {
+    @apply bg-white/[0.02] backdrop-blur-[16px] rounded-[20px] md:rounded-[28px] transition-all duration-500;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background-clip: padding-box;
+    position: relative;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+  
+  .glass-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .glass-panel:hover {
+    @apply bg-white/[0.04] border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.4)];
+  }
+
+  /* Glow Shadows for Cards - More Subtle and Deep */
+  .shadow-glow-blue {
+    box-shadow: 0 0 50px -15px rgba(59, 130, 246, 0.2);
+  }
+  .shadow-glow-purple {
+    box-shadow: 0 0 50px -15px rgba(139, 92, 246, 0.2);
+  }
+  .shadow-glow-amber {
+    box-shadow: 0 0 50px -15px rgba(245, 158, 11, 0.2);
+  }
+  .shadow-glow-emerald {
+    box-shadow: 0 0 50px -15px rgba(16, 185, 129, 0.2);
+  }
+  .shadow-glow-rose {
+    box-shadow: 0 0 50px -15px rgba(244, 63, 94, 0.2);
+  }
+
+  /* Fintech Primary Button */
+  .glow-button {
+    @apply relative overflow-hidden bg-gradient-to-br from-fin-blue to-fin-indigo text-white font-bold rounded-2xl shadow-[0_10px_25px_-5px_rgba(59,130,246,0.4)] transition-all duration-500 flex items-center justify-center gap-2;
+  }
+  .glow-button:hover {
+    @apply shadow-[0_15px_35px_-5px_rgba(59,130,246,0.6)] -translate-y-0.5;
+  }
+  .glow-button:active {
+    @apply translate-y-0 scale-95;
+  }
+  .glow-button::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full transition-transform duration-1000;
+  }
+  .glow-button:hover::before {
+    @apply translate-x-full;
+  }
+
+  /* Fintech Secondary Button */
+  .glass-button {
+    @apply bg-white/[0.04] border border-white/10 text-slate-300 rounded-2xl font-semibold transition-all duration-300 hover:bg-white/[0.08] hover:text-white hover:border-white/20 flex items-center justify-center gap-2;
+  }
+
+  /* Typography Hierarchy */
+  .metric-value {
+    @apply text-4xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.1)];
+  }
+  .metric-title {
+    @apply text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500/80;
+  }
+  .section-title {
+    @apply text-2xl font-extrabold text-white tracking-tight;
+  }
+
+  /* Status Badges */
+  .badge {
+    @apply px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border transition-all duration-300;
+  }
+  .badge-success { @apply bg-fin-emerald/10 text-fin-emerald border-fin-emerald/20 shadow-[0_0_15px_rgba(16,185,129,0.1)]; }
+  .badge-warning { @apply bg-fin-amber/10 text-fin-amber border-fin-amber/20 shadow-[0_0_15px_rgba(245,158,11,0.1)]; }
+  .badge-danger { @apply bg-fin-rose/10 text-fin-rose border-fin-rose/20 shadow-[0_0_15px_rgba(244,63,94,0.1)]; }
+  .badge-info { @apply bg-fin-blue/10 text-fin-blue border-fin-blue/20 shadow-[0_0_15px_rgba(59,130,246,0.1)]; }
+
+  /* Gradient Text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-white/40;
+  }
+  .text-gradient-blue {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-fin-blue to-fin-indigo;
+  }
+}
